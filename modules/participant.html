@@ -4,14 +4,13 @@
 <script>
     function F__ID(){
         //-------------------------------------
-        _fields="_Form,Record_ID,Registration_ID,_Data_Entry,_Setup,_Quest,_Login_ID,_Password";
-		_fields="_Form,Record_ID,Study_ID,Screening_Number,Randomisation_Number,Initials,Gender,DOB,_Data_Entry,_Setup,_Quest,_Login_ID,_Password";
+		_fields="_Form,Record_ID,Registration_ID,Screening_Number,Randomisation_Number,Initials,Gender,DOB,_Data_Entry,_Setup,_Quest,_Login_ID,_Password";
         _fields+=",Submit Date|DateTime,Submitted by|Author,_Delete";
         //-------------------------------------
         VmInclude:__PARTS__/grid/grid.2.js
         VmInclude:__PARTS__/style/ease-in-out.2.js
         //-------------------------------------
-		var login_setup_tid=_mlist[_ids['participant_login_setup']].table_id;
+		var login_setup_tid=_mlist[_ids.participant_login_setup].table_id;
 		//-------------------------------------
         $('#D__ID').on('load',function(){  _set_req(); _request_data();  })
         $('#D__ID').on('back',function(){  _set_req(); _request_data();  })

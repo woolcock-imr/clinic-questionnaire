@@ -4,14 +4,6 @@ var sql_participant=_config.parameters.sql_participant;
 var participant_tid	=$vm.module_list[_ids.participant].table_id;
 var notes_tid		=$vm.module_list[_ids.task_notes].table_id;
 var visit_task=_module.section_name+" - "+_module.name;
-/*
-var config=_mobj.op.sys.config;
-var panel=_mobj.op.panel;
-var site_filter_tid	='';
-//var sql_participant=_config.parameters.sql_participant;
-//var this_module=$vm.vm['__ID'].name;
-//var visit_task=$vm.module_list[this_module].visit_task;
-*/
 //-------------------------------------
 _record_type="s2";
 var _task_fields='';
