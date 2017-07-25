@@ -2,7 +2,7 @@
 	"name":"",
 	"url":"https://vmiis.github.io/modules/panels/panel.2.html",
 	"parameters":{
-		"sql_participant" : "@('Subject_Initials')+' '+@('Gender')+' '+@('DOB')"
+		"sql_participant" : "@('Registration_ID')+' '+@('Gender')+' '+@('DOB')"
 	},
 	"panel":
 	{
@@ -19,14 +19,14 @@
 							{
 								"module_id":"participant",
 								"name":"Patients",
-								"table_id":"20010378",
+								"table_id":"20011177",
 								"url":"/modules/participant.html",
 								"counting":"1"
 							}
 							,{
 								"module_id":"task_notes",
 								"name":"Notes",
-								"table_id":"20010379",
+								"table_id":"20011181",
 								"url":"/modules/task_notes.html",
 								"counting":"1"
 							}
@@ -38,24 +38,40 @@
 				"sections" :
 				[
 					{
-						"name":"General information",
+						"name":"Section 1",
 						"modules":
 						[
 							{
-								"module_id":"g_mh",
-								"name":"Medical history",
-								"table_id":"20010385",
-								"url":"/modules/task/medical_history.html",
+								"module_id":"m_001",
+								"name":"Task 1",
+								"table_id":"20011175",
+								"url":"/modules/task/template.html",
+								"counting":"1",
+								"quest":"1",
 								"child":"1",
 								"single_record":"1",
-								"counting":"1",
-								"?quest":"1",
-								"form_module":"g_mh_form"
+								"form_module":"m_001_form"
 							}
 							,{
-								"module_id":"g_mh_form",
-								"table_id":"20010385",
-								"url":"/modules/task/medical_history.form.html"
+								"module_id":"m_001_form",
+								"table_id":"20011175",
+								"url":"/modules/task/template.form.html"
+							}
+							,{
+								"module_id":"m_002",
+								"name":"Task 2",
+								"table_id":"20011176",
+								"url":"/modules/task/template.html",
+								"counting":"1",
+								"quest":"1",
+								"child":"1",
+								"single_record":"1",
+								"form_module":"m_002_form"
+							}
+							,{
+								"module_id":"m_002_form",
+								"table_id":"20011176",
+								"url":"/modules/task/template.form.html"
 							}
 						]
 					}
