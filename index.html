@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
 		<title>Woolcock Institute of Medical Research</title>
+		<meta charset="utf-8">
+		<meta name='viewport' content='width=device-width, initial-scale=1'>
 		<meta name="description" content="business portal,business management,single-page application,online database">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.1.4.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<meta name='viewport' content='width=device-width, initial-scale=1'>
-		<script system-js-code>
+		<script vm-js-start-code>
+			//check and clear localstorage
+			var data=''; for(var key in window.localStorage){ if(window.localStorage.hasOwnProperty(key)){ data+=window.localStorage[key]; }}
+			if(data.length>3000000) localStorage.clear();
+			//set name space
 			$vm={}; $VmAPI={};$vm.module_list={};$vm.config_list={}
 			$(document).ready(function(){
 				var start=function(){
@@ -22,8 +25,6 @@
 					$vm.hosting_path=path;
 					if(window.location.hostname=='127.0.0.1' || window.location.hostname=='localhost')	$vm.debug =true;
 					//--------------------------------------------------------
-					//trusted paths where modules can be loaded from
-					$vm.trust_path=['https://vmiis.github.io','https://raw.githubusercontent.com/vmiis','https://woolcock-imr.github.io','https://wappsystem.github.io','https://cbs.wappsystem.com','https://rt.woolcock.org.au','https://codepen.io/vmiis'];
 					$vm.reload='';
 					if(window.location.toString().indexOf('_d=3')!=-1){
 						$vm.reload=new Date().getTime().toString();
@@ -68,15 +69,17 @@
 						$vm.library_path =window.location.protocol+'//'+window.location.host;
 					}
 					//--------------------------------------------------------
-					if(window.location.toString().indexOf('database=demonstration')!=-1){
+					if(window.location.toString().indexOf('database=development')!=-1){
+						//connect to a public demonstration database
 						$vm.server          ='development';
 						$VmAPI.api_base     =config.api_path_development;
 					}
 					else{
+						//connect to the wappsystem database
 						$vm.server          ='production';
 						$VmAPI.api_base     =config.api_path_production;
 					}
-					$vm.debug_message=true;
+					$vm.debug_message=true; //show debug message in console
 					//--------------------------------------------------------
 					load_vmapi();
 				}
@@ -105,7 +108,10 @@
 				}
 				//--------------------------------------------------------
 				$vm.url=function(text){
-					//this is a function used to replace some text in modules to the correct ones
+					//replace clinical trilas
+					text=text.replace(/__BASE__\/vmiis\/Common-Code\/clinical_trials\/task.js/,'__HOST__/modules/dynamic/flat/task/task.js');
+					text=text.replace(/__BASE__\/vmiis\/Common-Code\/clinical_trials\/participant.js/,'__HOST__/modules/dynamic/flat/task/task.form.js');
+					//replace some text in old modules to the correct ones
 					text=text.replace(/__BASE__\/vmiis\/Common-Code\//g,'__PARTS__/');
 					text=text.replace(/__LIB__\/vmiis\/Common-Code\//g,'__PARTS__/');
 					text=text.replace(/__BASE__\/vmiis\/common-code\//g,'__PARTS__/');
@@ -153,38 +159,35 @@
 				}
 				//--------------------------------------------------------
 				var last=function(){
-					//after app started, this function will be called to load some resources those are not need immediately, so we can make the app start a bit quicker
-				    setTimeout(function () {
+					//at last point we will load some modules for ready to use
+			        //-------------------------------------
+					$vm.module_list['alert_dialog_module']={table_id:'--------',url:'__PARTS__/dialog/alert_dialog_module.html'};
+			        $vm.load_module_by_name('alert_dialog_module','',{})
+			        //-------------------------------------
+			        $vm.module_list['_system_export_dialog_module']={table_id:'',url:'__PARTS__/dialog/export_dialog_module.html'};
+			        $vm.load_module_by_name('_system_export_dialog_module','',{})
+			        //-------------------------------------
+			        $vm.module_list['_system_import_dialog_module']={table_id:'',url:'__PARTS__/dialog/import_dialog_module.html'};
+			        $vm.load_module_by_name('_system_import_dialog_module','',{})
+			        //-------------------------------------
+					setTimeout(function (){
 				        $.ajaxSetup({ cache: true });
-				        $.getScript('https://ajax.aspnetcdn.com/ajax/jquery.ui/1.11.4/jquery-ui.min.js',function(){last_last();});
-				        $.getScript('https://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js',function(){last_last();});
-				        $.getScript('https://sdk.amazonaws.com/js/aws-sdk-2.1.34.min.js',function(){last_last();});
-				        $.getScript('https://www.google.com/jsapi',function(){
-				            google.load('visualization', '1', {'packages':['corechart'],callback:function(){last_last();} } );
-				        });
-				        $('head').append("<link rel='stylesheet' href='https://ajax.aspnetcdn.com/ajax/jquery.ui/1.11.4/themes/redmond/jquery-ui.css'>");
-				    }, 300);
-				}
-				//--------------------------------------------------------
-				var jsN=0;
-				var last_last=function(){
-					//at last last point we will load some modules for ready to use
-				    jsN++;
-				    if(jsN===3){
-						$vm.check_and_clear_localstorage();
-				        //-------------------------------------
-						$vm.module_list['alert_dialog_module']={table_id:'--------',url:'__PARTS__/dialog/alert_dialog_module.html'};
-				        $vm.load_module_by_name('alert_dialog_module','',{})
-				        //-------------------------------------
-				        $vm.module_list['_system_export_dialog_module']={table_id:'',url:'__PARTS__/dialog/export_dialog_module.html'};
-				        $vm.load_module_by_name('_system_export_dialog_module','',{})
-				        //-------------------------------------
-				        $vm.module_list['_system_import_dialog_module']={table_id:'',url:'__PARTS__/dialog/import_dialog_module.html'};
-				        $vm.load_module_by_name('_system_import_dialog_module','',{})
-				        //-------------------------------------
-				        $vm.ready=1;
-				        //-------------------------------------
-				    }
+						$('head').append("<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>");
+						$('head').append("<link rel='stylesheet' href='https://ajax.aspnetcdn.com/ajax/jquery.ui/1.11.4/themes/redmond/jquery-ui.css'>");
+						$.getScript('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js');
+				        $.getScript('https://ajax.aspnetcdn.com/ajax/jquery.ui/1.11.4/jquery-ui.min.js');
+				        $.getScript('https://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js');
+				        $.getScript('https://sdk.amazonaws.com/js/aws-sdk-2.1.34.min.js');
+						$.getScript('https://www.gstatic.com/charts/loader.js',function(){
+							google.charts.load('current', {packages: ['corechart']});
+						});
+						(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+						(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+						m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+						})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+						ga('create', 'UA-105358394-3', 'auto');
+						ga('send', 'pageview');
+				    }, 10);
 				}
 				//********************************************************
 				//this is the start point
@@ -193,26 +196,6 @@
 				//********************************************************
 			});
 		</script>
-
-		<style global-css>
-			html,body{
-				margin:0;
-				padding:0;
-				height:100%;
-				width:100%;
-				font: 14px Helvetica, Arial, sans-serif;
-			}
-		</style>
-
-		<script google>
-			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-			ga('create', 'UA-105358394-3', 'auto');
-			ga('send', 'pageview');
-		</script>
 	</head>
-	<body>
-	</body>
+	<body></body>
 </html>

@@ -1,6 +1,7 @@
 {
 	"library_path":"https://cbs.wappsystem.com/dev/github",
 	"parts_path":"https://vmiis.github.io/parts",
+	"image_path":"https://image.datalinkedin.com",
 	"api_path_development":"https://cbs.wappsystem.com/dev/",
 	"api_path_production":"https://rt.woolcock.org.au/",
 	"modules":
@@ -9,18 +10,9 @@
 		{
 			"url":"/modules/static/home.html"
 		},
-		"about":
+		"portal":
 		{
-			"url":"/modules/static/about.html"
-		},
-		"project":
-		{
-			"url":"/modules/dynamic/panel.html",
-			"config_url":"/configurations/project.json"
-		},
-		"contact":
-		{
-			"url":"/modules/static/contact.html"
+			"url":"/configurations/portal.json"
 		}
 	}
 }
