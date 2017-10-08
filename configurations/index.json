@@ -13,6 +13,10 @@
 		"portal":
 		{
 			"url":"/configurations/portal.json"
+		},
+		"qlist":
+		{
+			"url":"/configurations/qlist.json"
 		}
 	}
 }
