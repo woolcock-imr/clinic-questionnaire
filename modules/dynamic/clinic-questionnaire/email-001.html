@@ -72,9 +72,10 @@
         //-------------------------------------
 		var _ids=$vm.vm['__ID'].op.sys.config.module_ids;
 		var pid=$vm.module_list[_ids.visit].table_id
-		var record=$vm.vm['__ID'].op.record;
+		var record;
         //-------------------------------------
         $('#D__ID').on('load',function(){
+			record=$vm.vm['__ID'].op.record;
             $('#patient__ID').text(record.First_Name+' '+record.Last_Name);
 			$('#Login_ID__ID').text(record.UID+'-'+pid);
             $('#Password__ID').text(record.Password);
