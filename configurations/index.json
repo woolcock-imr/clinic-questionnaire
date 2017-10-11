@@ -5,7 +5,7 @@
 	"api_path_development":"https://cbs.wappsystem.com/dev/",
 	"api_path_production":"https://rt.woolcock.org.au/",
 	"parameters":{
-		"task_list":["20011308","20011309"]
+		"task_list":["20011308","20011309,20011176,20011312,20011175,20011311,20011310"]
 	},
 	"modules":
 	{
@@ -16,10 +16,6 @@
 		"portal":
 		{
 			"url":"/configurations/portal.json"
-		},
-		"qlist":
-		{
-			"url":"/configurations/qlist.json"
 		}
 	}
 }
