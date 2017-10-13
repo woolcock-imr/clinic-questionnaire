@@ -4,18 +4,20 @@
 	"image_path":"https://image.datalinkedin.com",
 	"api_path_development":"https://cbs.wappsystem.com/dev/",
 	"api_path_production":"https://rt.woolcock.org.au/",
+	"default_production":"Yes",
+	"additional_groups":[],
 	"parameters":{
 		"task_list":["20011308","20011309,20011176,20011312,20011175,20011311,20011310"]
 	},
 	"modules":
 	{
-		"home":
-		{
-			"url":"/modules/static/home.html"
-		},
-		"portal":
-		{
-			"url":"/configurations/portal.json"
-		}
+		"home":	{"url":"/modules/static/home.html"},
+		"panel":{"url":"/modules/static/panel.html"},
+		"visit":{"url":"/modules/dynamic/clinic-questionnaire/visit.html","table_id":"20011195"},
+		"physician":{"url":"/modules/dynamic/clinic-questionnaire/physician.html","table_id":"20011196"},
+		"area":{"url":"/modules/dynamic/clinic-questionnaire/area.html","table_id":"20011197"},
+		"visit-type":{"url":"/modules/dynamic/clinic-questionnaire/visit-type.html","table_id":"20011198"},
+		"email_001":{"url":"/modules/dynamic/clinic-questionnaire/email-001.html"},
+		"report":{"url":"/modules/dynamic/clinic-questionnaire/report.html"}
 	}
 }

@@ -12,7 +12,6 @@
         $('#D__ID').on('load',function(){
 			var record=$vm.vm['__ID'].op.record;
 			participant_uid=record.UID;
-			//$('#contents__ID').html('Report '+record.UID+' '+record.First_Name+' '+record.Last_Name);
 			var url=$vm.url($vm.vm['__ID'].op.url);
 			$.get(url+'?_='+$vm.version+$vm.reload,function(text){
 				//--------------------------------------------------------
