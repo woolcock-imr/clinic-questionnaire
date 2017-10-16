@@ -1,36 +1,54 @@
 <section>
-    VmInclude:__PARTS__/grid/grid.html
+    VmInclude:__COMPONENT__/grid/grid.v3.html
 </section>
 <script>
     function F__ID(){
         //-------------------------------------
-        VmInclude:__PARTS__/grid/grid.v2.js
+        VmInclude:__COMPONENT__/grid/grid.v3.js
         //-------------------------------------
         var fields="First_Name,Last_Name,Telephone,Email,Physician,Area,Visit_Type,Date,Start_Time,End_Time,_Login_ID,Password,_Hidden|List,_Send_Email,_Report";
         _fields="_Form,"+fields+",Submit Date|DateTime,Submitted by|Author,_Delete";
         //-------------------------------------
-		var physician_tid=_mlist['physician'].table_id;
-		var area_tid=_mlist['area'].table_id;
-		var visit_type_tid=_mlist['visit-type'].table_id;
+		var prefix=_mlist[$vm.vm['__ID'].name].prefix; if(prefix==undefined) prefix="";
+		var physician_tid=_mlist[prefix+'physician'].table_id;
+		var area_tid=_mlist[prefix+'area'].table_id;
+		var visit_type_tid=_mlist[prefix+'visit-type'].table_id;
 		//-------------------------------------
+		var get_visit_pid_list=function(url,list){
+			$.get(url+'?_='+$vm.ver[1]+$vm.reload,function(data){
+				var txt=$('<div/>').html(data).text();
+				var config;
+				try{ config=JSON.parse(txt);}
+				catch (e){ alert("Error in app config file\n"+e); return; }
+				for (var property in config.modules) {
+					var table_id=config.modules[property].table_id;
+					if(table_id!=undefined) list.push(table_id);
+				}
+			},'text');
+		}
+		//-------------------------------------
+		var first_pid_list=[];		get_visit_pid_list('https://woolcock-imr.github.io/clinic-online-questionnaire/configurations/first.json',first_pid_list);
+		var second_pid_list=[];
+		//-------------------------------------
+
         $('#D__ID').on('load',function(){  _set_req(); _request_data(); })
         //-------------------------------------
 		_cell_render=function(records,I,field,td,set_value,source){
             switch(field){
                 case 'Physician':
 					var sql="with tb as (select distinct name=S1,UID from [TABLE-"+physician_tid+"]) select name, value=name,value2=UID from tb where name like '%'+@S1+'%' ";
-					VmInclude:__PARTS__/grid/field_auto.js
+					VmInclude:__COMPONENT__/grid/field_auto.js
 	                break;
 				case 'Area':
 					var sql="with tb as (select distinct name=S1,UID from [TABLE-"+area_tid+"]) select name, value=name,value2=UID from tb where name like '%'+@S1+'%' ";
-					VmInclude:__PARTS__/grid/field_auto.js
+					VmInclude:__COMPONENT__/grid/field_auto.js
 	                break;
 				case 'Visit_Type':
 					var sql="with tb as (select distinct name=S1,UID from [TABLE-"+visit_type_tid+"]) select name, value=name,value2=UID from tb where name like '%'+@S1+'%' ";
-					VmInclude:__PARTS__/grid/field_auto.js
+					VmInclude:__COMPONENT__/grid/field_auto.js
 	                break;
 				case 'Date':
-					VmInclude:__PARTS__/grid/field_date.js
+					VmInclude:__COMPONENT__/grid/field_date.js
 	                break;
 				case '_Login_ID':
 					records[I].vm_custom[field]=true;
@@ -38,6 +56,7 @@
 					td.text(records[I].UID+'-'+_db_pid);
 					break;
 				case '_Send_Email':
+
 					records[I].vm_custom[field]=true;
 					if(records[I].UID===undefined) return;
 					td.html("<u style='cursor:pointer'>Send Email</u>");
@@ -48,7 +67,7 @@
 							case 'aaa-bbb':email_module_id="email_001";break;
 						}
 						//-----------------
-						email_module_id="email_001";
+						email_module_id=prefix+"email_001";
 						var this_mobj=_mobj;
 						var this_record=records[I];
 						var op={
@@ -89,7 +108,9 @@
         }
         //-------------------------------------
 		_before_submit=function(record,dbv){
-			record.List=$vm.app_config.parameters.task_list.toString();
+
+			record.List=first_pid_list.task_list.toString(); //based on some logic, select first or second or...
+
 			dbv.S1=record.Physician;
 			dbv.S3=record.Password;
 			dbv.DT1=record.Date;
@@ -99,5 +120,5 @@
     }
 </script>
 <style>
-    VmInclude:__PARTS__/grid/grid.css
+    VmInclude:__COMPONENT__/grid/grid.v3.css
 </style>
