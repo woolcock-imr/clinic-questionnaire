@@ -30,7 +30,7 @@
 		//-------------------------------------
 		var create_report=function(config){
 			//---------------------------
-			//duplicate
+			//copy all modules from config.modules to local modules;
 			modules={}
 			total_N=0;
 			var ms=config.modules;
@@ -53,6 +53,7 @@
 		var data_request=function(property,table_id){
 			var sql="select Information from [TABLE-"+table_id+"] where PUID="+participant_uid;
 			$VmAPI.request({data:{cmd:'query_records',sql:sql},callback:function(res){
+				//attach res.records to local module
 				modules[property].records=res.records;
 				report_processing();
 			}})
@@ -71,9 +72,14 @@
 				}
 				else{
 					for (var p in records[0]) {
-						var new_p=config.dictionary[property][p];
-						if(new_p==undefined) new_p=p;
-						html+="<br>"+s(new_p)+":"+s(records[0][p])
+						if(config.dictionary[property]!=undefined){
+							var new_p=config.dictionary[property][p];
+							if(new_p==undefined) new_p=p;
+							html+="<br>"+s(new_p)+":"+s(records[0][p])
+						}
+						else{ //no dictionary
+							html+="<br>"+s(p)+":"+s(records[0][p])
+						}
 					}
 				}
 			}
