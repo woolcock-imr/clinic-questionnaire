@@ -65,22 +65,25 @@
 			total_N--;
 			if(total_N>0) return;
 			//data processing after all request come back
-			var html='<table class="table table-bordered"><tbody>';
+			var html='<table id="table__ID" class="table table-bordered" style="max-width:500px"><colgroup><col style="width:250px"></col><col></col></colgroup><tbody>';
 			for (var property in modules) {
 				var records=modules[property].records;
 				for (var p in records[0]) {
-                    html+='<tr><th scope="row">'
-					if(config.dictionary[property]!=undefined){
-						var new_p=config.dictionary[property][p];
-						if(new_p==undefined) new_p=p;
-						html+=new_p+'</th><td>'+records[0][p]+'</td>'
-					}
-					else{ //no dictionary
-						html+='</th><td>'+records[0][p]+'</td>'
-					}
-                    html+='</tr>'
+                    if(p!='Participant' && p!='Participant_uid' ){
+                        html+='<tr><th scope="row">'
+    					if(config.dictionary[property]!=undefined){
+    						var new_p=config.dictionary[property][p];
+    						if(new_p==undefined) new_p=p;
+    						html+=new_p+'</th><td>'+records[0][p]+'</td>'
+    					}
+    					else{ //no dictionary
+    						html+='</th><td>'+records[0][p]+'</td>'
+    					}
+                        html+='</tr>'
+                    }
 				}
 			}
+            html+='</table></div>'
 			$('#contents__ID').html(html)
 		}
 		//-------------------------------------
