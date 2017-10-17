@@ -12,11 +12,12 @@
 	{
 		"home":	{"url":"/modules/static/home.html"},
 		"panel":{"url":"/modules/static/panel.html"},
-		"visit":{"url":"/modules/dynamic/clinic-questionnaire/visit.html","table_id":"20011195"},
-		"physician":{"url":"/modules/dynamic/clinic-questionnaire/physician.html","table_id":"20011196"},
-		"area":{"url":"/modules/dynamic/clinic-questionnaire/area.html","table_id":"20011197"},
-		"visit-type":{"url":"/modules/dynamic/clinic-questionnaire/visit-type.html","table_id":"20011198"},
-		"email_001":{"url":"/modules/dynamic/clinic-questionnaire/email-001.html"},
-		"report":{"url":"/modules/dynamic/clinic-questionnaire/report.html"}
+		"visit":{"url":"/modules/dynamic/visit.html","table_id":"20011195"},
+		"physician":{"url":"/modules/dynamic/physician.html","table_id":"20011196"},
+		"area":{"url":"/modules/dynamic/area.html","table_id":"20011197"},
+		"visit-type":{"url":"/modules/dynamic/visit-type.html","table_id":"20011198"},
+		"email_001":{"url":"/modules/dynamic/email-001.html"},
+		"report":{"url":"/modules/dynamic/report.html"},
+		"patient_info":{"url":"/modules/dynamic/patient_info.html"}
 	}
 }
