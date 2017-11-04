@@ -1,4 +1,4 @@
-<section id=page__ID>
+<section id=panel__ID>
 	<div class='nav__ID'>
 	    <span>Visit</span>
 	    <ul>
@@ -15,30 +15,24 @@
 
 <script>
       function F__ID(){
-		  $('#page__ID li').on('click',function(){
+          //--------------------------------------------------------
+		  var prefix=$vm.vm["__ID"].name+"_";
+		  $('#panel__ID li').on('click',function(){
 			  var m=$(this).attr('module');
               if(m!=undefined){
-				  if($vm.module_list[m]==undefined){
-					  alert("The module '"+m+"' doesn't exist in the module list (not in the config files).")
+				  if($vm.module_list[prefix+m]==undefined){
+					  alert(prefix+m +" is not in the module list.");
+					  return;
 				  }
-				  else{
-					  if($vm.module_list[m].url==undefined){
-						  alert("The module "+m+" exists in the module list but no url was found.")
-					  }
-					  else{
-						  $vm.module_list[m].alert='1';
-						  $vm.nav_load_module(m);
-					  }
-				  }
-			  }
+			      $vm.nav_load_module(prefix+m);
+              }
 		  })
-		  $('#D__ID').on('show',function(){
-		  })
+		  //--------------------------------------------------------
       }
 </script>
 
 <style>
-	VmInclude:__PARTS__/navigation/navigation.css
+	VmInclude:__COMPONENT__/navigation/navigation.css
 	#D__ID{
 		background-color:#fff;
 		height:100%;
