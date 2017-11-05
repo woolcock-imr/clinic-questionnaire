@@ -16,7 +16,7 @@
         $('#D__ID').on('load',function(){
 			var record=$vm.vm['__ID'].op.record;
 			participant_uid=record.UID;
-			var url=$vm.url($vm.vm['__ID'].op.url);
+			var url=$vm.url($vm.vm['__ID'].op.url); //example:https://clinic-online-questionnaire.rt.org.au/configurations/first.json
 			$.get(url+'?_='+$vm.version+$vm.reload,function(text){
 				//--------------------------------------------------------
 				config;	try{ config=JSON.parse(text);}
