@@ -95,7 +95,7 @@
                 alert('No email address.')
                 return;
             }
-     		var Title="Online Questionnaire";
+     		var Title="Clinic Online Registration";
      		var Body=$('#contents__ID').html();
             //if($vm.user=='guest'){ alert('The alert email (to: '+To+') has been sent out'); return;}
 			$VmAPI.request({data:{cmd:'send_email',From_Address:From_Address,From_Name:From_Name,To:To,Title:Title,Body:Body},callback:function(res){
