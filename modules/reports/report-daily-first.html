@@ -83,7 +83,7 @@
         });
         //---------------------------------------------
     	$('#D__ID').on('load',function(){
-            load_data();
+            //load_data();
         });
         var load_data=function(){
             //-----------------------------------------
@@ -239,15 +239,15 @@
                             $('#years_1__ID').html(res.records[0].ex_smoker_years);
                             $('#quit_1__ID').html(res.records[0].ex_smoker_quit);
                         }
-                        $('#None_1__ID').html(res.records[0].None);
-                        $('#MRSA_1__ID').html(res.records[0].MRSA);
-                        $('#VRE_1__ID').html(res.records[0].VRE);
-                        $('#MRAB_1__ID').html(res.records[0].MRAB);
-                        $('#Other_1__ID').html(res.records[0].Other);
-                        $('#carer_1__ID').html(res.records[0].carer);
+                        if(res.records[0].None=="None") $('#None_1__ID').html("Yes"); else $('#None_1__ID').html("-");
+                        if(res.records[0].MRSA=="MRSA") $('#MRSA_1__ID').html("Yes"); else $('#MRSA_1__ID').html("-");
+                        if(res.records[0].VRE=="VRE") $('#VRE_1__ID').html("Yes"); else $('#VRE_1__ID').html("-");
+                        if(res.records[0].MRAB=="MRAB") $('#MRAB_1__ID').html("Yes"); else $('#MRAB_1__ID').html("-");
+                        if(res.records[0].Other=="Other") $('#Other_1__ID').html("Yes"); else $('#Other_1__ID').html("-");
                         $('#infectious_diseases_other_1__ID').html(res.records[0].infectious_diseases_other);
                         $('#infectious_diseases_year_1__ID').html(res.records[0].infectious_diseases_year);
                         $('#infectious_diseases_site_1__ID').html(res.records[0].infectious_diseases_site);
+                        $('#carer_1__ID').html(res.records[0].carer);
                         $('#wheelchair_1__ID').html(res.records[0].wheelchair);
                         $('#interpreter_1__ID').html(res.records[0].interpreter);
                         $('#interpreter_language_1__ID').html(res.records[0].interpreter_language);
