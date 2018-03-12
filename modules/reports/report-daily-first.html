@@ -30,10 +30,10 @@
 			"volunteer":	        {"url":"/modules/task/volunteer.html","table_id":"20011342","report":"table_form_volunteer"}
 			*/
 			var tb="<div id=tbdiv_1 style='padding:20px;'>";
+            var name="";
 			var sql="select Information from [TABLE-20011312] where PUID="+participant_uid;
-
 			$VmAPI.request({data:{cmd:'query_records',sql:sql},callback:function(res){
-				var name="",sex="",dob="";
+				var sex="",dob="";
 				if(res.records.length>0){
 					name=res.records[0].Name;
 					sex=res.records[0].Sex;
@@ -44,30 +44,64 @@
                 tb+="<tr><th>"+name+"</th><th>"+sex+"</th><th>"+dob+"</th></tr>";
                 tb+="</table>";
 			}});
+            var sql="select Information from [TABLE-20011175] where PUID="+participant_uid;
+			$VmAPI.request({data:{cmd:'query_records',sql:sql},callback:function(res){
+				var benefit="",ref_doc="",ref_letter="";
+				if(res.records.length>0){
+					benefit=res.records[0].benefits;
+					ref_doc=res.records[0].Referring_doctor;
+					ref_letter=res.records[0].letter;
+				}
+                tb+="<table class=width__ID>";
+                tb+="<colgroup><col style='width:300px' /><col style='width:200px'  /><col /></colgroup>";
+                tb+="<tr><td>"+benefit+"</td><td>Ref. Dr: "+ref_doc+"</td><td>"+ref_letter+"</td></tr>";
+                tb+="</table>";
+			}});
+            var sql="select Information from [TABLE-20011309] where PUID="+participant_uid;
+			$VmAPI.request({data:{cmd:'query_records',sql:sql},callback:function(res){
+                var snore="",unfreshed="",driving="",shortness_breath="",stop_breathing="",staying_asleep="",daytime_worries="",pain="",staying_asleep="",chronically_sleepy="",menopause="",jerk_arms="",sleeping_tablets_frequency="",toilet_number="",unusual_movements_describe="";
+                var grind_teeth="",unusual_movements="",sleeping_tablets="",sleeping_tablets_name="",sleep_start="",sleep_end="",leg_sensations="",toilet="";
+				if(res.records.length>0){
+                    snore=res.records[0].snore
+                    unfreshed=res.records[0].unfreshed;
+                    driving=res.records[0].driving;
+                    shortness_breath=res.records[0].shortness_breath;
+                    stop_breathing=res.records[0].stop_breathing;
+                    chronically_sleepy=res.records[0].chronically_sleepy;
+                    staying_asleep=res.records[0].staying_asleep;
+                    daytime_worries=res.records[0].daytime_worries;
+                    grind_teeth=res.records[0].grind_teeth;
+                    pain=res.records[0].pain;
+                    leg_sensations=res.records[0].leg_sensations;
+                    jerk_arms=res.records[0].jerk_arms;
+                    unusual_movements=res.records[0].unusual_movements;
+                    unusual_movements_describe=res.records[0].unusual_movements_describe;
+                    toilet=res.records[0].toilet;
+                    toilet_number=res.records[0].toilet_number;
+                    menopause=res.records[0].menopause;
+                    sleeping_tablets=res.records[0].sleeping_tablets;
+                    sleeping_tablets_frequency=res.records[0].sleeping_tablets_frequency;
+                    sleeping_tablets_name=res.records[0].sleeping_tablets_name;
+                    sleep_start=res.records[0].sleep_start;
+                    sleep_end=res.records[0].sleep_end;
+				}
+                tb+="<table class=width__ID>";
+                tb+="<colgroup><col style='width:200px' /><col style='width:50px'  /><col style='width:200px' /><col style='width:50px'  /><col style='width:200px' /><col /></colgroup>";
+                tb+="<tr><th colspan=6>SLEEP HISTORY "+name+"</tr>";
+                tb+="<tr><td>Do you snore?</td><td>"+snore+"</td><td>Do you wake unrefreshed?</td><td>"+unfreshed+"</td><td>Have you ever fallen asleep whilst driving?</td><td>"+driving+"</td></tr>";
+                tb+="<tr><td>Do you awaken with shortness of breath?</td><td>"+shortness_breath+"</td><td>Have you or your partner noticed you stop breathing when you are asleep?</td><td>"+stop_breathing+"</td><td>In the daytime are you chronically sleepy, fatigued or tired?</td><td>"+chronically_sleepy+"</td></tr>";
+                tb+="<tr><td>Do you have trouble falling or staying asleep?</td><td>"+staying_asleep+"</td><td>Do daytime worries keep you awake at night?</td><td>"+daytime_worries+"</td><td>Does pain disturb your sleep?</td><td>"+pain+"</td></tr>";
+                tb+="<tr><td>Do you grind your teeth during sleep?</td><td>"+grind_teeth+"</td><td>Do you experience unpleasant leg sensations at bed time?</td><td>"+leg_sensations+"</td><td>Do you kick or jerk your arms or legs during sleep?</td><td>"+jerk_arms+"</td></tr>";
+                tb+="<tr><td>Have you ever had unusual movements or behaviors during sleep?</td><td>"+unusual_movements+"</td><td colspan=2>"+unusual_movements_describe+"</td><td>If appropriate age and gender, have you gone through menopause?</td><td>"+menopause+"</td></tr>";
+                tb+="<tr><td>Do you go to the toilet frequently overnight?</td><td>"+toilet+"</td><td> If yes, how many times on average per night?</td><td>"+toilet_number+"</td><td colspan=2></td></tr>";
+                tb+="<tr><td>Do you take sleeping tablets?</td><td>"+sleeping_tablets+"</td><td>"+sleeping_tablets_name+"</td><td>How often</td><td colspan=2>"+sleeping_tablets_frequency+"</td></tr>";
+                tb+="<tr><td>Sleep Start</td><td>"+sleep_start+"</td><td>Sleep End</td><td>"+sleep_end+"</td><td colspan=2></td></tr>";
+                tb+="</table>";
+			}});
 			tb+="</div>";
 			return tb;
 
 			var tb="\
-            <div id=tbdiv_1 style='padding:20px;'>\
-                <table id=table_form_personal__ID class=width__ID>\
-                    <colgroup><col style='width:450px' /><col style='width:100px'  /><col /></colgroup>\
-                    <tr><th><span id=name_"+n+"__ID></span></th><th><span id=sex_"+n+"__ID></span></th><th><span id=dob_"+n+"__ID></span></th></tr>\
-                </table>\
-                <table id=table_form_medicare_referrals__ID class=width__ID>\
-                    <colgroup><col style='width:300px' /><col style='width:200px'  /><col /></colgroup>\
-                    <tr><td><span id=benefit_"+n+"__ID></span></td><td>Ref. Dr: <span id=ref_doc_"+n+"__ID></span></td><td><span id=ref_letter_l__ID></span></td></tr>                </table>\
-                <table id=table_form_sleep_history__ID class=width__ID>\
-                    <colgroup><col style='width:200px' /><col style='width:50px'  /><col style='width:200px' /><col style='width:50px'  /><col style='width:200px' /><col /></colgroup>\
-                    <tr><th colspan=6>SLEEP HISTORY <span id=name2_"+n+"__ID></th></tr>\
-                    <tr><td>Do you snore?</td><td><span id=snore_"+n+"__ID></span></td><td>Do you wake unrefreshed?</td><td><span id=unfreshed_"+n+"__ID></span></td><td>Have you ever fallen asleep whilst driving?</td><td><span id=driving_"+n+"__ID></span></td></tr>\
-                    <tr><td>Do you awaken with shortness of breath?</td><td><span id=shortness_breath_"+n+"__ID></span></td><td>Have you or your partner noticed you stop breathing when you are asleep?</td><td><span id=stop_breathing_"+n+"__ID></span></td><td>In the daytime are you chronically sleepy, fatigued or tired?</td><td><span id=chronically_sleepy_"+n+"__ID></span></td></tr>\
-                    <tr><td>Do you have trouble falling or staying asleep?</td><td><span id=staying_asleep_"+n+"__ID></span></td><td>Do daytime worries keep you awake at night?</td><td><span id=daytime_worries_"+n+"__ID></span></td><td>Does pain disturb your sleep?</td><td><span id=pain_"+n+"__ID></span></td></tr>\
-                    <tr><td>Do you grind your teeth during sleep?</td><td><span id=grind_teeth_"+n+"__ID></span></td><td>Do you experience unpleasant leg sensations at bed time?</td><td><span id=leg_sensations_"+n+"__ID></span></td><td>Do you kick or jerk your arms or legs during sleep?</td><td><span id=jerk_arms_"+n+"__ID></span></td></tr>\
-                    <tr><td>Have you ever had unusual movements or behaviors during sleep?</td><td><span id=unusual_movements_"+n+"__ID></span></td><td colspan=2><span id=unusual_movements_describe_"+n+"__ID></span></td><td>If appropriate age and gender, have you gone through menopause?</td><td><span id=menopause_"+n+"__ID></span></td></tr>\
-                    <tr><td>Do you go to the toilet frequently overnight?</td><td><span id=toilet_"+n+"__ID></span></td><td> If yes, how many times on average per night?</td><td><span id=toilet_number_"+n+"__ID></span></td><td colspan=2></td></tr>\
-                    <tr><td>Do you take sleeping tablets?</td><td><span id=sleeping_tablets_"+n+"__ID></span></td><td><span id=sleeping_tablets_name_"+n+"__ID></span></td><td>How often</td><td colspan=2><span id=sleeping_tablets_frequency_"+n+"__ID></span></td></tr>\
-                    <tr><td>Sleep Start</td><td><span id=sleep_start_"+n+"__ID></span></td><td>Sleep End</td><td><span id=sleep_end_"+n+"__ID></span></td><td colspan=2></td></tr>\
-                </table>\
                 <table id=table_form_health_history__ID class=width__ID>\
                     <tr><th colspan=6>HEALTH HISTORY <span id=name3_"+n+"__ID></th></tr>\
                     <colgroup><col style='width:200px' /><col style='width:50px'  /><col style='width:200px' /><col style='width:50px'  /><col style='width:200px' /><col /></colgroup>\
@@ -364,6 +398,7 @@
     .item_footer__ID{font-size:9pt; font-family:Verdana;text-align:right;padding-top:3px;padding-right:0px;}
     .width__ID{
         width:800px;
+        border-width:1px;
     }
     @media print{
         #content_container_0{
