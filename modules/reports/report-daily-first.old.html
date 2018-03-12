@@ -16,38 +16,7 @@
         VmInclude:__COMPONENT__/toolbar/day_v2.js
         VmInclude:__COMPONENT__/grid/grid.v3.js
         //---------------------------------------------
-        var table=function(record){
-			var participant_uid=record.UID;
-			/*
-			"health-history":		{"url":"/modules/task/health-history.html","table_id":"20011308","report":"table_form_health_history"},
-			"sleep-history":		{"url":"/modules/task/sleep-history.html","table_id":"20011309","report":"table_form_sleep_history"},
-			"short-sleep-history":	{"url":"/modules/task/short-sleep-history.html","table_id":"20011176","report":"table_form_short_sleep_history"},
-			"personal":				{"url":"/modules/task/personal.html","table_id":"20011312","report":"table_form_personal"},
-			"medicare-referrals":	{"url":"/modules/task/medicare-referrals.html","table_id":"20011175","report":"table_form_medicare_referrals"},
-			"epworth-sleepiness-scale":	{"url":"/modules/task/epworth-sleepiness-scale.html","table_id":"20011311","report":"table_form_ess"},
-			"additional-questions":	{"url":"/modules/task/additional-questions.html","table_id":"20011310","report":"table_additional_questions"},
-			"consent":	            {"url":"/modules/task/consent.html","table_id":"20011345","report":"table_form_consent"},
-			"volunteer":	        {"url":"/modules/task/volunteer.html","table_id":"20011342","report":"table_form_volunteer"}
-			*/
-			var tb="<div id=tbdiv_1 style='padding:20px;'>";
-			var sql="select Information from [TABLE-20011312] where PUID="+participant_uid;
-
-			$VmAPI.request({data:{cmd:'query_records',sql:sql},callback:function(res){
-				var name="",sex="",dob="";
-				if(res.records.length>0){
-					name=res.records[0].Name;
-					sex=res.records[0].Sex;
-					dob=res.records[0].DOB;
-				}
-				tb+="<table class=width__ID>";
-				tb+="<colgroup><col style='width:450px' /><col style='width:100px'  /><col /></colgroup>";
-                tb+="<tr><th>"+name+"</th><th>"+sex+"</th><th>"+dob+"</th></tr>";
-                tb+="</table>";
-			}});
-			tb+="</div>";
-			return tb;
-
-			var tb="\
+        var table=function(n){var tb="\
             <div id=tbdiv_1 style='padding:20px;'>\
                 <table id=table_form_personal__ID class=width__ID>\
                     <colgroup><col style='width:450px' /><col style='width:100px'  /><col /></colgroup>\
@@ -119,14 +88,12 @@
                 </table>\
             </div>\
             "
-            //return tb;
+            return tb;
         }
         var N=0;
         $('#refresh__ID').on('click',function(){
             $('#F__ID').html("")
-			jQuery.ajaxSetup({async:false});
             load_data();
-			jQuery.ajaxSetup({async:true});
         });
         //---------------------------------------------
     	$('#D__ID').on('load',function(){
@@ -140,10 +107,9 @@
             $VmAPI.request({data:{cmd:'query_records',sql:sql,t1:$('#date__ID').val()},callback:function(res){
                 if(res.records.length>0){
                     for(var i=0;i<res.records.length;i++){
-                        tbl+=table(res.records[i]);
+                        tbl+=table(i+1);
                     }
                     $('#F__ID').html(tbl)
-					/*
                     for(var i=0;i<res.records.length;i++){
                         alert(1)
                         N++;
@@ -160,7 +126,6 @@
                             alert( "The configuration file ("+url+") doesn't exist!" );
                         });
                     }
-					*/
                 }
             }})
             //-----------------------------------------
