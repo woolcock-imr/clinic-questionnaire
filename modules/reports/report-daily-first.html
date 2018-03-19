@@ -253,6 +253,8 @@
 			}});
             var sql="select Information from [TABLE-20011310] where PUID="+participant_uid;
 			$VmAPI.request({data:{cmd:'query_records',sql:sql},callback:function(res){
+                var td_yes="<td style='color:red;font-weight:bold;text-align:center'>Yes</td>";
+                var td_no="<td style='text-align:center'> No</td>"
 				var Tea="",Coffee="",Cola="",Alcohol="",smoker="",per_day="",years="",quit="";
                 var drug_user="",drug_type="",drug_freq="",None="",MRSA="",VRE="",MRAB="";
                 var Other="",infectious_diseases_other="",infectious_diseases_year="",infectious_diseases_site="",wheelchair="",carer="";
@@ -274,6 +276,7 @@
                         years=res.records[0].ex_smoker_years;
                     }
                     drug_user=res.records[0].drug_user;
+                    if(drug_user=='Yes') drug_user=td_yes; else drug_user=td_no
                     drug_type=res.records[0].drug_type;
                     drug_freq=res.records[0].drug_freq;
                     None=res.records[0].None;
@@ -295,25 +298,29 @@
                     infectious_diseases_year=res.records[0].infectious_diseases_year;
                     infectious_diseases_site=res.records[0].infectious_diseases_site;
                     wheelchair=res.records[0].wheelchair;
+                    if(wheelchair=='Yes') wheelchair=td_yes; else wheelchair=td_no
                     carer=res.records[0].carer;
+                    if(carer=='Yes') carer=td_yes; else carer=td_no
                     interpreter=res.records[0].interpreter;
+                    if(interpreter=='Yes') interpreter=td_yes; else interpreter=td_no
                     interpreter_language=res.records[0].interpreter_language;
                     diet=res.records[0].diet;
+                    if(diet=='Yes') diet=td_yes; else diet=td_no
                     diet_type=res.records[0].diet_type;
 				}
                 tb+="<table id=table_additional_questions__ID class=width__ID>";
                 tb+="<colgroup><col style='width:100px' /><col style='width:100px'  /><col style='width:100px' /><col style='width:100px'  /><col style='width:100px' /><col style='width:100px'  /><col style='width:100px' /><col style='width:100px'  /></colgroup>";
                 tb+="<tr><th colspan=8>ADDITIONAL QUESTIONS  "+name+"</th></tr>";
-                tb+="<tr><td>Tea</td><td>"+Tea+"</td><td>Coffee</td><td>"+Coffee+"</td><td>Cola</td><td>"+Cola+"</td><td>Alcohol</td><td>"+Alcohol+"</td></tr>";
-                tb+="<tr><td>Smoking:</td><td>"+smoker+"</td><td>How many per day</td><td>"+per_day+"</td><td>How many years</td><td>"+years+"</td><td>When did you quit?</td><td>"+quit+"</td></tr>";
-                tb+="<tr><td>Drug user:</td><td>"+drug_user+"</td><td>Drug:</td><td colspan=3>"+drug_type+"</td><td>Frequency</td><td>"+drug_freq+"</td></tr>";
-                tb+="<tr><td colspan=8 >Do you have or ever had any infectious diseases:</td></tr>";
-                tb+="<tr><td>None</td>"+None+"<td>MRSA</td>"+MRSA+"<td>VRE</td>"+VRE+"<td>MRAB</td>"+MRAB+"</tr>";
-                tb+="<tr><td>Other</td><td>"+Other+"</td><td colspan=2 >If other, please specfy:</td><td colspan=3>"+infectious_diseases_other+"</td></tr>";
-                tb+="<tr><td colspan=3>What year were you infected?</td><td>"+infectious_diseases_year+"</td><td colspan=3 >What was the site of the infection?</td><td>"+infectious_diseases_site+"</td></tr>";
-                tb+="<tr><td colspan=3 >Are you wheelchair bound?</td><td>"+wheelchair+"</td><td colspan=3 >Do you require a carer with you on the night of your sleep study?</td><td>"+carer+"</td></tr>";
-                tb+="<tr><td colspan=3 >Do you require an interpreter?</td><td>"+interpreter+"</td><td colspan=2 >If yes, what language?</td><td colspan=2>"+interpreter_language+"</td></tr>";
-                tb+="<tr><td colspan=3 >Do you require a special diet?</td><td>"+diet+"</td><td colspan=2>If yes, what type?</td><td colspan=2>"+diet_type+"</td></tr>";
+                tb+="<tr><td><i>Tea</i></td><td style='text-align:center'>"+Tea+"</td><td><i>Coffee</i></td><td style='text-align:center'>"+Coffee+"</td><td><i>Cola</i></td><td style='text-align:center'>"+Cola+"</td><td><i>Alcohol</i></td><td style='text-align:center'>"+Alcohol+"</td></tr>";
+                tb+="<tr><td><i>Smoking:</i></td><td style='text-align:center'>"+smoker+"</td><td><i>How many per day</i></td><td style='text-align:center'>"+per_day+"</td><td><i>How many years</i></td><td style='text-align:center'>"+years+"</td><td><i>When did you quit?</i></td><td style='text-align:center'>"+quit+"</td></tr>";
+                tb+="<tr><td><i>Drug user:</i></td>"+drug_user+"<td><i>Drug:</i></td><td colspan=3>"+drug_type+"</i></td><td><i>Frequency</td><td>"+drug_freq+"</td></tr>";
+                tb+="<tr><td colspan=8 ><i>Do you have or ever had any infectious diseases:</i></td></tr>";
+                tb+="<tr><td><i>None</i></td>"+None+"<td><i>MRSA</i></td>"+MRSA+"<td><i>VRE</i></td>"+VRE+"<td><i>MRAB</i></td>"+MRAB+"</tr>";
+                tb+="<tr><td><i>Other</i></td>"+Other+"<td colspan=2 ><i>If other, please specfy:</i></td><td colspan=4>"+infectious_diseases_other+"</td></tr>";
+                tb+="<tr><td colspan=3 ><i>What year were you infected?</i></td><td style='text-align:center'>"+infectious_diseases_year+"</td><td colspan=3 ><i>What was the site of the infection?</i></td><td>"+infectious_diseases_site+"</td></tr>";
+                tb+="<tr><td colspan=3 ><i>Are you wheelchair bound?</i></td>"+wheelchair+"<td colspan=3 ><i>Do you require a carer with you on the night of your sleep study?</i></td>"+carer+"</tr>";
+                tb+="<tr><td colspan=3 ><i>Do you require an interpreter?</i></td>"+interpreter+"<td colspan=2 ><i>If yes, what language?</i></td><td colspan=2>"+interpreter_language+"</td></tr>";
+                tb+="<tr><td colspan=3 ><i>Do you require a special diet?</i></td>"+diet+"<td colspan=2><i>If yes, what type?</i></td><td colspan=2>"+diet_type+"</td></tr>";
                 tb+="</table>";
 			}});
 
